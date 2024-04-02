@@ -23,3 +23,22 @@ def get_chatrooms_with_last_message():
 
 #  MY VIEWS  #
 
+def index(request):
+    user = request.user
+    if not user.is_authenticated:
+        return redirect('login')
+    chat_rooms = get_chatrooms_with_last_message()
+    
+    return render(request, 'index.html', context={'chat_rooms': chat_rooms})
+
+def room(request, room_name):
+    chatroom, created = ChatRoom.objects.get_or_create(name=room_name)
+    chat_messages = Message.objects.filter(chatroom=chatroom)
+
+    context = {
+        'room_name': room_name,
+        'chat_messages': chat_messages,
+        'current_user': request.user.username
+    }
+
+    return render(request, 'chat_room.html', context)
