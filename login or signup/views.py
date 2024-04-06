@@ -44,3 +44,8 @@ def signup(request):
             messages.success(request, "SignUp succesful! Login to continue")
             return redirect('login')
     return render(request, 'signup.html')
+
+def signout(request):
+    logout(request)
+    messages.success(request, "SignOut succesful!")
+    return redirect('login')
