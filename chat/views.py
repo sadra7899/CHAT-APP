@@ -20,9 +20,7 @@ def get_chatrooms_with_last_message():
     
     return chat_rooms_with_last_message
 
-
-#  MY VIEWS  #
-
+# Create your views here.
 def index(request):
     user = request.user
     if not user.is_authenticated:

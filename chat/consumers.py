@@ -26,14 +26,14 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
 
-
+        # Extract the sender and chatroom information from the consumer's scope
         sender = self.scope['user']
         room_name = self.scope['url_route']['kwargs']['room_name']
 
-
+        # Get the ChatRoom object
         chatroom = await sync_to_async(ChatRoom.objects.get)(name=room_name)
 
-
+        # Save the message to the database
         await sync_to_async(Message.objects.create)(
             message=message,
             sender=sender,
